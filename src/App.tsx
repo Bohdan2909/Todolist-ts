@@ -16,7 +16,7 @@ function App() {
 
     const tasksForTodoList: Array<TaskType> = [
         {id: 1, title: "HTML & CSS", isDone: true},
-        {id: 2, title: "React & TS", isDone: false},
+        {id: 2, title: "React & TS", isDone: true},
         {id: 3, title: "JS & ES6", isDone: false}
     ]
 
