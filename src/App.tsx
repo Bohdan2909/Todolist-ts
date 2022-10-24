@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
 import TodoList from './TodoList';
+import {v1} from 'uuid';
 
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -14,20 +15,23 @@ function App() {
     //BLL:
     const todoListTitle: string = 'What to learn?'
     const [tasksForTodoList, setTasksForTodoList] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML & CSS', isDone: true},
-        {id: 2, title: 'React & TS', isDone: false},
-        {id: 3, title: 'JS & ES6', isDone: false}
+        {id: v1(), title: 'HTML & CSS', isDone: true},
+        {id: v1(), title: 'React & TS', isDone: false},
+        {id: v1(), title: 'JS & ES6', isDone: false}
     ])
     const [filter, setFilter] = useState<BtnType>('All')
-
-    let tasks = tasksForTodoList
-    if (filter === 'Active') {
-        tasks = tasksForTodoList.filter(t => !t.isDone)
+    const getFilterTasks = (tasks: Array<TaskType>, filterValue: BtnType) => {
+        let filteredTasks = tasks
+        if (filterValue === 'Active') {
+            filteredTasks = tasks.filter(t => !t.isDone)
+        }
+        if (filterValue === 'Completed') {
+            filteredTasks = tasks.filter(t => t.isDone)
+        }
+        return filteredTasks
     }
-    if (filter === 'Completed') {
-        tasks = tasksForTodoList.filter(t => t.isDone)
-    }
-    const removeTask = (taskId: number) => {
+    const filteredTasks = getFilterTasks(tasksForTodoList, filter)
+    const removeTask = (taskId: string) => {
         let deleteTask = tasksForTodoList.filter(item => item.id !== taskId)
         setTasksForTodoList(deleteTask)
     }
@@ -35,21 +39,20 @@ function App() {
         setFilter(btn)
     }
     const addTask = (value: string) => {
-        let newTask = {id: Math.floor(Math.random() * 100 - 1), title: value, isDone: false}
+        let newTask: TaskType = {id: v1(), title: value, isDone: false}
         setTasksForTodoList([newTask, ...tasksForTodoList])
     }
+
 
     //GUI
     return (
         <div className={'App'}>
             <TodoList title={todoListTitle}
-                      tasks={tasks}
+                      tasks={filteredTasks}
                       removeTask={removeTask}
                       btnFilter={btnFilter}
                       addTask={addTask}
             />
-
-
         </div>
     );
 }
