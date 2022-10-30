@@ -1,5 +1,5 @@
 import React, {KeyboardEvent, ChangeEvent, useState} from 'react';
-import {BtnType, TaskType} from './App'
+import {BtnType, TaskType} from '../App'
 
 type TodoListPropsType = {
     title: string
@@ -9,7 +9,7 @@ type TodoListPropsType = {
     addTask: (value: string) => void
 }
 
-const TodoList = (props: TodoListPropsType) => {
+function TodoList  (props: TodoListPropsType)  {
 
     const [value, setValue] = useState('')
 

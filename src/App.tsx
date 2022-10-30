@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import TodoList from './TodoList';
+import TodoList from './components/Todolist';
 import {v1} from 'uuid';
 
 
@@ -20,6 +20,7 @@ function App() {
         {id: v1(), title: 'JS & ES6', isDone: false}
     ])
     const [filter, setFilter] = useState<BtnType>('All')
+
     const getFilterTasks = (tasks: Array<TaskType>, filterValue: BtnType) => {
         let filteredTasks = tasks
         if (filterValue === 'Active') {
@@ -38,6 +39,7 @@ function App() {
     const btnFilter = (btn: BtnType) => {
         setFilter(btn)
     }
+// todo: addTask function
     const addTask = (value: string) => {
         let newTask: TaskType = {id: v1(), title: value, isDone: false}
         setTasksForTodoList([newTask, ...tasksForTodoList])
