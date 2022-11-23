@@ -2,10 +2,10 @@ import React, {ChangeEvent} from 'react';
 import {BtnType, TaskType} from '../App'
 import {EditableSpan} from './EditableSpan';
 import {AddItemForm} from './AddItemForm';
-import {Button, IconButton} from '@mui/material';
-import {Delete} from '@mui/icons-material';
-
-
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Delete from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
 
 
 type TodoListPropsType = {
@@ -60,15 +60,15 @@ function TodoList(props: TodoListPropsType) {
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, item.id, e.currentTarget.checked)
             return (
                 <li key={item.id} className={item.isDone ? 'is-done' : ''}>
-                    <input type="checkbox"
-                           checked={item.isDone}
-                           onChange={changeTaskStatusHandler}
+                    <Checkbox
+                        checked={item.isDone}
+                        onChange={changeTaskStatusHandler}
                     />
                     {/*<span>{item.title}</span>*/}
                     <EditableSpan title={item.title}
                                   callback={(newTitle) => updateTitleTaskHandler(item.id, newTitle)}/>
-                    <IconButton  style={{marginLeft: 10}}
-                            onClick={onclickRemoveHandler}>
+                    <IconButton style={{marginLeft: 10}}
+                                onClick={onclickRemoveHandler}>
                         <Delete/>
                     </IconButton>
                 </li>
@@ -81,8 +81,8 @@ function TodoList(props: TodoListPropsType) {
         <div>
             <h3>
                 <EditableSpan title={title} callback={(newTitle: string) => updateTitleTodolistHandler(newTitle)}/>
-                <IconButton aria-label='delete' onClick={removeTodolistHandler}>
-                <Delete/>
+                <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+                    <Delete/>
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTaskForm}/>
@@ -90,11 +90,30 @@ function TodoList(props: TodoListPropsType) {
                 {taskList}
             </ul>
             <div>
-                <Button variant='contained' size='small' className={filter === 'all' ? 'btn-active' : ''} onClick={clickHandlerFilterAll}>All</Button>
-                <Button variant='contained' size='small'  className={filter === 'active' ? 'btn-active' : ''} onClick={clickHandlerFilterActive}>Active
+                <Button variant={filter === 'all' ? 'contained' : 'outlined'}
+                        size="small"
+                        className={filter === 'all' ? 'btn-active' : ''}
+                        onClick={clickHandlerFilterAll}
+                        color="success"
+                >
+                    All
                 </Button>
-                <Button variant='contained' size='small'  className={filter === 'completed' ? 'btn-active' : ''}
-                        onClick={clickHandlerFilterCompleted}>Completed
+                <Button variant={filter === 'active' ? 'contained' : 'outlined'}
+                        size="small"
+                        className={filter === 'active' ? 'btn-active' : ''}
+                        onClick={clickHandlerFilterActive}
+                        color="primary"
+                >
+
+                    Active
+                </Button>
+                <Button variant={filter === 'completed' ? 'contained' : 'outlined'}
+                        size="small"
+                        className={filter === 'completed' ? 'btn-active' : ''}
+                        onClick={clickHandlerFilterCompleted}
+                        color="secondary"
+                >
+                    Completed
                 </Button>
             </div>
         </div>

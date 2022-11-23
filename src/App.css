@@ -1,21 +1,21 @@
-.App {
-  padding: 30px;
-  display: flex;
-}
-li{
-  list-style: none;
-}
-.App > div {
-  margin-right: 50px;
-}
-.error{
-  border: 1px solid red;
-  outline: none;
+/*.App {*/
+/*  padding: 30px;*/
+/*  display: flex;*/
+/*}*/
+/*li{*/
+/*  list-style: none;*/
+/*}*/
+/*.App > div {*/
+/*  margin-right: 50px;*/
+/*}*/
+/*.error{*/
+/*  border: 1px solid red;*/
+/*  outline: none;*/
 
-}
-.error-message{
-  color: red;
-}
+/*}*/
+/*.error-message{*/
+/*  color: red;*/
+/*}*/
 .btn-active{
   background-color: blueviolet;
   border-color:blueviolet;
