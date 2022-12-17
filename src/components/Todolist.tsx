@@ -44,8 +44,8 @@ function TodoList(props: TodoListPropsType) {
     const addTaskForm = (value: string) => {
         addTask(todolistId, value)
     }
-    const updateTitleTaskHandler = (taskId: string, newTile: string) => {
-        updateTaskTitle(todolistId, taskId, newTile)
+    const updateTitleTaskHandler = (taskId: string, newTitle: string) => {
+        updateTaskTitle(todolistId, taskId, newTitle)
     }
     const updateTitleTodolistHandler = (newTitle: string) => {
         updateTitleTodolist(todolistId, newTitle)

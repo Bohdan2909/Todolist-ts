@@ -59,18 +59,7 @@ export const tasksReducer = (state: TasksType = initialState, action: ActionType
                     .map(task => task.id === action.payload.taskId ? {...task, title: action.payload.newTitle} : task)
             }
         }
-        // case 'UPDATE-TASKS': {
-        //     return {
-        //         ...state
-        //     }
-        // }
-        // case 'ADD-TASKS-FOR-TODOLIST': {
-        //
-        //     return {
-        //         ...state,
-        //         [action.todolistId]: []
-        //     }
-        // }
+
         case 'ADD-TODOLIST': {
 
             return {

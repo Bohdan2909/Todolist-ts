@@ -23,6 +23,6 @@
   opacity: .5;
   text-decoration: line-through;
 }
-/*li{*/
-/*  list-style: none;*/
-/*}*/
+li{
+  list-style: none;
+}
