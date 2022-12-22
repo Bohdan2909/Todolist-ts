@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import TodoList from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
@@ -42,6 +42,7 @@ export type TodolistType = {
 
 function AppWithRedux() {
     //BLL:
+    console.log('App')
 
     const dispatch = useDispatch()
     const todolists = useSelector<AppStateType, TodolistType[]>((state) => state.todolists)
@@ -73,7 +74,7 @@ function AppWithRedux() {
         dispatch(ChangeTaskStatusAC(todolistId, taskId, isDone))
     }
 
-    const addTodolist = (newTitle: string) => {
+    const addTodolist = useCallback((newTitle: string) => {
         // let newTodolistId = v1()
         // const newTodolist: TodolistType = {id: v1(), title: newTitle, filter: 'all'}
         // setTodolist([newTodolist, ...todolist])
@@ -86,7 +87,7 @@ function AppWithRedux() {
         // dispatchTasks(action)
 
         // dispatchTasks(AddTasksForTodolistAC(newTodolist.id))
-    }
+    },[dispatch])
     const removeTodolist = (todolistId: string) => {
         // setTodolist(todolist.filter(el => el.id !== todolistId))
         // setTasks({...tasks})
@@ -126,6 +127,13 @@ function AppWithRedux() {
                 <Grid container spacing={5}>
                     {
                         todolists.map(el => {
+                            // let filteredTask = tasks[el.id]
+                            // if (el.filter === 'active') {
+                            //     filteredTask = tasks[el.id].filter(t => !t.isDone)
+                            // }
+                            // if (el.filter === 'completed') {
+                            //     filteredTask = tasks[el.id].filter(t => t.isDone)
+                            // }
                             return (
 
                                 <Grid key={el.id} item>

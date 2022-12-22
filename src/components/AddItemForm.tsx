@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import AddBox from '@mui/icons-material/AddBox';
 import IconButton from '@mui/material/IconButton';
@@ -10,12 +10,13 @@ type AddItemFormType = {
     addItem: (value: string) => void
 }
 
-export function AddItemForm(props: AddItemFormType) {
+export const AddItemForm = memo((props: AddItemFormType) => {
+    console.log('AddItemForm')
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string | null>('')
     const changeValue = (event: ChangeEvent<HTMLInputElement>) => {
         setValue(event.currentTarget.value)
-        setError('')
+        if (error) setError('')
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && clickHandlerAddTask()
     const clickHandlerAddTask = () => {
@@ -53,4 +54,4 @@ export function AddItemForm(props: AddItemFormType) {
             {/*{error && <div className="error-message">Failed is required</div>}*/}
         </div>
     )
-}
+})
