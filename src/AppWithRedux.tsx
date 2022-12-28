@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import TodoList from './components/Todolist';
+// import TodoList from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
