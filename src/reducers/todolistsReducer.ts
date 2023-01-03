@@ -1,15 +1,19 @@
-import {BtnType, TodolistType} from '../App';
 import {v1} from 'uuid';
+import {TodolistType} from '../api/todolist-api';
 
 export let todolistID1 = v1()
 export let todolistID2 = v1()
-const initialState: TodolistType[] = [
+export type BtnType = 'all' | 'active' | 'completed'
+export type TodolistDomainType = TodolistType & {
+    filter: BtnType
+}
+const initialState: TodolistDomainType[] = [
     // {id: todolistID1, title: 'What to learn', filter: 'all'},
     // {id: todolistID2, title: 'What to buy', filter: 'all'}
 ]
-export type ActionType = RemoveTodolistAC | BtnFilterAC | UpdateTitleTodolistAC | AddTodolistAC
+export type ActionTodolistType = RemoveTodolistAC | BtnFilterAC | UpdateTitleTodolistAC | AddTodolistAC
 
-export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionType): TodolistType[] => {
+export const todolistsReducer = (state: TodolistDomainType[] = initialState, action: ActionTodolistType): TodolistDomainType[] => {
 
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
@@ -24,7 +28,7 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
 
         }
         case 'ADD-TODOLIST': {
-            const newTodolist: TodolistType = {id: action.todolistId, title: action.newTitle, filter: 'all'}
+            const newTodolist: TodolistDomainType = {id: action.todolistId, title: action.newTitle, filter: 'all',addedDate:'',order:0}
             return [
                 newTodolist,
                 ...state

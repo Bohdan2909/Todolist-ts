@@ -16,7 +16,7 @@ export const EditableSpan =memo((props: EditableSpanType) => {
 
     }
     const onEnterChangeSpanHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        console.log(e)
+
         if (e.key === 'Enter') {
             setEdit(!edit)
             edit && props.callback(updateTitle)

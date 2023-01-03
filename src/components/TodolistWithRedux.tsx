@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
@@ -6,14 +6,20 @@ import {AddItemForm} from './AddItemForm';
 import Button from '@mui/material/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../store';
-import {BtnType, TaskType, TodolistType} from '../AppWithRedux';
-import Checkbox from '@mui/material/Checkbox';
 import {AddTasksAC, ChangeTaskStatusAC, RemoveTasksAC, UpdateTasksTitleAC} from '../reducers/tasksReducer';
-import {BtnFilterAC, RemoveTodolistAC, UpdateTitleTodolistAC} from '../reducers/todolistsReducer';
+import {
+    BtnFilterAC,
+    BtnType,
+    RemoveTodolistAC,
+    TodolistDomainType,
+    UpdateTitleTodolistAC
+} from '../reducers/todolistsReducer';
+import {TaskStatuses, TaskType} from '../api/todolist-api';
+import {Task} from './Task';
 // import CheckBox from './CheckBox';
 
 type TodolistWithReduxType = {
-    todolist: TodolistType
+    todolist: TodolistDomainType
 }
 const TodolistWithRedux = memo((props: TodolistWithReduxType) => {
     console.log('TodolistWithRedux')
@@ -21,14 +27,14 @@ const TodolistWithRedux = memo((props: TodolistWithReduxType) => {
     let tasks = useSelector<AppStateType, TaskType[]>(state => state.tasks[id])
 
     if (filter === 'active') {
-        tasks = tasks.filter(t => !t.isDone)
+        tasks = tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (filter === 'completed') {
-        tasks = tasks.filter(t => t.isDone)
+        tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
     const dispatch = useDispatch()
-    const changeTaskStatus = useCallback((todolistId: string, taskId: string, isDone: boolean) => {
-        dispatch(ChangeTaskStatusAC(todolistId, taskId, isDone))
+    const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
+        dispatch(ChangeTaskStatusAC(todolistId, taskId, status))
     }, [dispatch])
     const removeTask = useCallback((todolistId: string, taskId: string) => {
         dispatch(RemoveTasksAC(todolistId, taskId))
@@ -130,31 +136,3 @@ export default TodolistWithRedux;
 
 
 
-type TaskPropsType = {
-    task: TaskType
-    todolistId: string
-    removeTask: (todolistId: string, taskId: string) => void
-    changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
-    updateTitleTaskHandler: (taskId: string, newTitle: string) => void
-}
-export const Task = memo((props: TaskPropsType) => {
-    const onclickRemoveHandler = () => props.removeTask(props.todolistId, props.task.id)
-
-    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(props.todolistId, props.task.id, e.currentTarget.checked)
-    return (
-        <li className={props.task.isDone ? 'is-done' : ''}>
-            <Checkbox
-                checked={props.task.isDone}
-                onChange={changeTaskStatusHandler}
-            />
-            {/*<CheckBox callback={(check) => changeTaskStatusHandler(item.id, check)} isDone={item.isDone}/>*/}
-
-            <EditableSpan title={props.task.title}
-                          callback={(newTitle) => props.updateTitleTaskHandler(props.task.id, newTitle)}/>
-            <IconButton style={{marginLeft: 10}}
-                        onClick={onclickRemoveHandler}>
-                <Delete/>
-            </IconButton>
-        </li>
-    )
-})

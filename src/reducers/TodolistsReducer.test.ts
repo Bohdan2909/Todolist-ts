@@ -1,18 +1,18 @@
 import {v1} from 'uuid';
-import {TodolistType} from '../App';
-import {AddTodolistAC, todolistsReducer, UpdateTitleTodolistAC} from './todolistsReducer';
+import {AddTodolistAC, TodolistDomainType, todolistsReducer, UpdateTitleTodolistAC} from './todolistsReducer';
+
 let todolistId1 = v1()
 let todolistId2 = v1()
-let startState: Array<TodolistType> = [
-    {id: todolistId1, title: 'What to learn', filter: 'all'},
-    {id: todolistId2, title: 'What to buy', filter: 'all'}
+let startState: Array<TodolistDomainType> = [
+    {id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
+    {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0}
 ]
 beforeEach(()=>{
     todolistId1 = v1()
     todolistId2 = v1()
     startState = [
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'}
+        {id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
+        {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0}
     ]
 })
 test('correct todolist should be added', () => {
