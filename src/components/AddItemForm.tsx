@@ -11,7 +11,7 @@ type AddItemFormType = {
 }
 
 export const AddItemForm = memo((props: AddItemFormType) => {
-    console.log('AddItemForm')
+
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string | null>('')
     const changeValue = (event: ChangeEvent<HTMLInputElement>) => {

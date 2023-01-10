@@ -7,7 +7,7 @@ type EditableSpanType = {
 
 }
 export const EditableSpan =memo((props: EditableSpanType) => {
-    console.log('EditableSpan')
+
     const [edit, setEdit] = useState(false)
     const [updateTitle, setUpdateTitle] = useState(props.title)
     const clickChangeSpanHandler = () => {

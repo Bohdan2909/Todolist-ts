@@ -15,7 +15,7 @@ import {
     AddTasksAC,
     ChangeTaskStatusAC,
     RemoveTasksAC,
-    tasksReducer,
+    tasksReducer, UpdateTaskAC,
     UpdateTasksTitleAC
 } from './reducers/tasksReducer';
 import {
@@ -107,19 +107,32 @@ function App() {
         // let newTask: TaskType = {id: v1(), title: value, isDone: false}
         // setTasksForTodoList([newTask, ...tasksForTodoList])
         // setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
-        dispatchTasks(AddTasksAC(todolistId, value))
+        let action = {
+            todoListId:todolistId,
+            title:value,
+            deadline:'',
+            status:TaskStatuses.New,
+            description:'',
+            addedDate:'',
+            order:0,
+            priority:0,
+            startDate:'',
+            id:'bla'
+        }
+
+        dispatchTasks(AddTasksAC(action))
     }
     const updateTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
         // setTasks({
         //     ...tasks,
         //     [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title: newTitle} : task)
         // })
-        dispatchTasks(UpdateTasksTitleAC(todolistId, taskId, newTitle))
+        dispatchTasks(UpdateTaskAC(todolistId, taskId, {title:newTitle}))
     }
     const changeTaskStatus = (todolistId: string, taskId: string, status: TaskStatuses) => {
         // setTasksForTodoList(tasksForTodoList.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
         // setTasks({...tasks, [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, isDone: isDone} : el)})
-        dispatchTasks(ChangeTaskStatusAC(todolistId, taskId, status))
+        dispatchTasks(UpdateTaskAC(todolistId, taskId, {status}))
     }
 
     const addTodolist = (newTitle: string) => {
@@ -130,7 +143,9 @@ function App() {
         //     ...tasks,
         //     [newTodolistId]: []
         // })
-        let action = AddTodolistAC(newTitle)
+        let action = AddTodolistAC(
+        {id: todolistID1, title: newTitle,  addedDate: '', order: 0}
+        )
         dispatchTodolists(action)
         dispatchTasks(action)
 

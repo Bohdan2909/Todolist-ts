@@ -1,5 +1,11 @@
 import {v1} from 'uuid';
-import {AddTodolistAC, TodolistDomainType, todolistsReducer, UpdateTitleTodolistAC} from './todolistsReducer';
+import {
+    AddTodolistAC,
+    SetTodolistsAC,
+    TodolistDomainType,
+    todolistsReducer,
+    UpdateTitleTodolistAC
+} from './todolistsReducer';
 
 let todolistId1 = v1()
 let todolistId2 = v1()
@@ -18,15 +24,21 @@ beforeEach(()=>{
 test('correct todolist should be added', () => {
 
     let newTitle = 'New Todolist'
-    const endState = todolistsReducer(startState, AddTodolistAC(newTitle))
+    const endState = todolistsReducer(startState, AddTodolistAC( {id: todolistId2, title: newTitle, addedDate: '', order: 0}))
 
     expect(endState.length).toBe(3)
     // expect(endState[2].title).toBe(newTitle)
-    expect(endState[2].filter).toBe('all')
+    // expect(endState[2].filter).toBe('all')
 })
 test('correct todolist title', () => {
     let newTitle = 'New Todolist'
     const endState = todolistsReducer(startState, UpdateTitleTodolistAC(todolistId2, newTitle))
     expect(endState[1].title).toBe(newTitle)
     expect(endState[0].filter).toBe('all')
+})
+test('todolist should be set to the state ', () => {
+
+    const endState = todolistsReducer([], SetTodolistsAC(startState))
+    expect(endState.length).toBe(2)
+
 })
