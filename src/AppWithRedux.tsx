@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-// import TodoList from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,16 +9,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {
-   addTodolistsTC,
-    fetchTodolistsTC,
-    TodolistDomainType,
-} from './reducers/todolistsReducer';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppStateType} from './store';
+import {addTodolistsTC, fetchTodolistsTC, TodolistDomainType,} from './reducers/todolistsReducer';
+import {useSelector} from 'react-redux';
+import {appDispatch, AppStateType} from './store';
 import TodolistWithRedux from './components/TodolistWithRedux';
-
-
 
 // export type TaskType = {
 //     id: string
@@ -33,15 +26,28 @@ import TodolistWithRedux from './components/TodolistWithRedux';
 //     filter: BtnType
 // }
 
-
 function AppWithRedux() {
     //BLL:
-    const dispatch = useDispatch()
+    const dispatch = appDispatch()
     const todolists = useSelector<AppStateType, TodolistDomainType[]>((state) => state.todolists)
 
     useEffect(() => {
         dispatch(fetchTodolistsTC())
     }, [])
+    const addTodolist = useCallback((newTitle: string) => {
+        // let newTodolistId = v1()
+        // const newTodolist: TodolistType = {id: v1(), title: newTitle, filter: 'all'}
+        // setTodolist([newTodolist, ...todolist])
+        // setTasks({
+        //     ...tasks,
+        //     [newTodolistId]: []
+        // })
+        let action = addTodolistsTC(newTitle)
+        dispatch(action)
+        // dispatchTasks(action)
+
+        // dispatchTasks(AddTasksForTodolistAC(newTodolist.id))
+    }, [dispatch])
     // const removeTask = (todolistId: string, taskId: string) => {
     //     // let deleteTask = tasksForTodoList.filter(item => item.id !== taskId)
     //     // setTasksForTodoList(deleteTask)
@@ -68,20 +74,6 @@ function AppWithRedux() {
     //     dispatch(ChangeTaskStatusAC(todolistId, taskId, status))
     // }
 
-    const addTodolist = useCallback((newTitle: string) => {
-        // let newTodolistId = v1()
-        // const newTodolist: TodolistType = {id: v1(), title: newTitle, filter: 'all'}
-        // setTodolist([newTodolist, ...todolist])
-        // setTasks({
-        //     ...tasks,
-        //     [newTodolistId]: []
-        // })
-        let action = addTodolistsTC(newTitle)
-        dispatch(action)
-        // dispatchTasks(action)
-
-        // dispatchTasks(AddTasksForTodolistAC(newTodolist.id))
-    }, [dispatch])
     // const removeTodolist = (todolistId: string) => {
     //     // setTodolist(todolist.filter(el => el.id !== todolistId))
     //     // setTasks({...tasks})
@@ -129,7 +121,6 @@ function AppWithRedux() {
                             //     filteredTask = tasks[el.id].filter(t => t.isDone)
                             // }
                             return (
-
                                 <Grid key={el.id} item>
                                     <Paper elevation={3} style={{padding: '50px'}}>
                                         <TodolistWithRedux todolist={el}/>

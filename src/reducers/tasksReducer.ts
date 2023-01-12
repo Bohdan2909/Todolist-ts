@@ -1,18 +1,9 @@
-import {v1} from 'uuid';
-import {
-    AddTodolistAC,
-    SetTodolistsType,
-    RemoveTodolistAC,
-    todolistID1,
-    todolistID2,
-    SetTodolistsAC
-} from './todolistsReducer';
+
+import {AddTodolistAC, SetTodolistsType, RemoveTodolistAC,} from './todolistsReducer';
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskType} from '../api/todolist-api';
 import {Dispatch} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import {AppStateType, ThunkType} from '../store';
+import {AppStateType} from '../store';
 import {TasksType} from '../components/TodolistWithRedux';
-
 
 export type TasksActionType =
     RemoveTasksAC
@@ -223,7 +214,7 @@ export type UpdateDomainTaskType = {
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskType): any => (dispatch: Dispatch, getState: () => AppStateType) => {
     const state = getState()
     const task = state.tasks[todolistId].find(t => t.id === taskId)
-    
+
     if (!task) return
     const apiModel: UpdateTaskType = {
         description: task.description,

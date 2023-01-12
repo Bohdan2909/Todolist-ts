@@ -1,13 +1,16 @@
-import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
+import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import {TodolistActionType, todolistsReducer} from './reducers/todolistsReducer';
 import {TasksActionType, tasksReducer} from './reducers/tasksReducer';
-import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {useDispatch} from 'react-redux';
 
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
     tasks:tasksReducer
 })
+export type DispatchThunkType = ThunkDispatch<AppStateType, any, AnyAction>
+export const appDispatch = () => useDispatch<DispatchThunkType>() // заміна useDispatch
 export type AppActionsType = TasksActionType | TodolistActionType
 // export type ThunkType = ThunkAction<void,AppStateType,unknown,AppActionsType>
 export type ThunkType<ReturnType = void> = ThunkAction<

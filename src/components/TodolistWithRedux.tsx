@@ -4,17 +4,10 @@ import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 import {AddItemForm} from './AddItemForm';
 import Button from '@mui/material/Button';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppStateType} from '../store';
-import {
-    addTasksTC, deleteTasksTC,
-    fetchTasksTC, updateTaskTC
-} from '../reducers/tasksReducer';
-import {
-    BtnFilterAC,
-    BtnType, changeTodolistsTC, deleteTodolistsTC,
-    TodolistDomainType,
-} from '../reducers/todolistsReducer';
+import {useSelector} from 'react-redux';
+import {appDispatch, AppStateType} from '../store';
+import {addTasksTC, deleteTasksTC, fetchTasksTC, updateTaskTC} from '../reducers/tasksReducer';
+import {BtnFilterAC, BtnType, changeTodolistsTC, deleteTodolistsTC, TodolistDomainType,} from '../reducers/todolistsReducer';
 import {TaskStatuses, TaskType} from '../api/todolist-api';
 import {Task} from './Task';
 // import CheckBox from './CheckBox';
@@ -26,7 +19,7 @@ export type TasksType = {
     [key: string]: TaskType[]
 }
 const TodolistWithRedux = memo((props: TodolistWithReduxType) => {
-    const dispatch = useDispatch()
+    const dispatch = appDispatch()
     const {id, title, filter} = props.todolist
     let tasks = useSelector<AppStateType, TaskType[]>(state => state.tasks[id])
 
@@ -73,7 +66,6 @@ const TodolistWithRedux = memo((props: TodolistWithReduxType) => {
                 removeTask={removeTask}
                 changeTaskStatus={changeTaskStatus}
                 updateTitleTaskHandler={updateTitleTaskHandler}/>
-
             // const onclickRemoveHandler = () => removeTask(id, item.id)
             //
             // const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(id, item.id, e.currentTarget.checked)
