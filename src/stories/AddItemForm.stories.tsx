@@ -18,3 +18,7 @@ const callback = action("Button add was pressed inside the form")
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 export const AddItemFormBase: ComponentStory<typeof AddItemForm> = (props:any) => <AddItemForm addItem={callback} />;
 
+const callback1 = action("Button add was pressed inside the form")
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+export const AddItemFormDisabledBase: ComponentStory<typeof AddItemForm> = (props:any) => <AddItemForm addItem={callback1} disabled={true} />;
+

@@ -20,18 +20,20 @@ import {Task} from './Task';
 //Types
 type TodolistWithReduxType = {
     todolist: TodolistDomainType
+    demo?: boolean
 }
 export type TasksType = {
     [key: string]: TaskType[]
 }
 //UI
-const TodolistWithRedux = memo((props: TodolistWithReduxType) => {
+const TodolistWithRedux = memo(({demo = false, ...props}: TodolistWithReduxType) => {
     const dispatch = appDispatch()
-    const {id, title, filter} = props.todolist
+    const {id, title, filter, entityStatus} = props.todolist
 
     let tasks = useSelector<AppStateType, TaskType[]>(state => state.tasks[id])
 
     useEffect(() => {
+        if (demo) return
         dispatch(fetchTasksTC(id))
     }, [])
 
@@ -102,11 +104,13 @@ const TodolistWithRedux = memo((props: TodolistWithReduxType) => {
         <div>
             <h3>
                 <EditableSpan title={title} callback={(newTitle: string) => updateTitleTodolistHandler(newTitle)}/>
-                <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+                <IconButton aria-label="delete" onClick={removeTodolistHandler} disabled={entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask}
+                         disabled={entityStatus === 'loading'}
+            />
             <ul>
                 {taskList}
             </ul>

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 //Types
 export type TodolistType = {
     id: string
@@ -83,7 +83,7 @@ export const todolistsAPI = {
 
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {
-        return instance.put<UpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<UpdateTaskType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
     createTask(todolistId: string, title: string) {
         return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: title})

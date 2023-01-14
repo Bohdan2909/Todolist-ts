@@ -20,7 +20,7 @@ export default {
 export const AppWithReduxBase: ComponentStory<typeof AppWithRedux> = (props:any) => {
   return <>
 
-    <AppWithRedux/>
+    <AppWithRedux demo={true}/>
 
   </>
 };

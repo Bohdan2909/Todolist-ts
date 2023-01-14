@@ -6,11 +6,11 @@ import IconButton from '@mui/material/IconButton';
 
 
 type AddItemFormType = {
-
+    disabled?: boolean
     addItem: (value: string) => void
 }
 
-export const AddItemForm = memo((props: AddItemFormType) => {
+export const AddItemForm = memo(({disabled = false, ...props}: AddItemFormType) => {
 
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string | null>('')
@@ -40,13 +40,14 @@ export const AddItemForm = memo((props: AddItemFormType) => {
                        error={!!error}
                        size="small"
                        helperText={error}
+                       disabled={disabled}
             />
             {/*<Button style={{minWidth: '38px', maxWidth: '38px', minHeight: '38px', maxHeight: '38px'}}*/}
             {/*        variant="contained"*/}
             {/*        color="primary"*/}
             {/*        onClick={clickHandlerAddTask}>+</Button>  */}
             <IconButton style={{minWidth: '38px', maxWidth: '38px', minHeight: '38px', maxHeight: '38px'}}
-
+                        disabled={disabled}
                         color="primary"
                         onClick={clickHandlerAddTask}>
                 <AddBox/>

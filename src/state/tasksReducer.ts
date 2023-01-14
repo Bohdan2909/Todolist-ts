@@ -3,6 +3,8 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskType} fr
 import {Dispatch} from 'redux';
 import {AppStateType, ThunkType} from './store';
 import {TasksType} from '../components/TodolistWithRedux';
+import {setAppErrorAC, setAppStatusAC} from './appReducer';
+import {handleServerAppError, handleServerNetworkError} from '../utils/errorUtils';
 //Types
 type RemoveTasksTypeAC = ReturnType<typeof removeTasksAC>
 type AddTasksTypeAC = ReturnType<typeof addTasksAC>
@@ -194,16 +196,35 @@ export const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
 
 //Thunks
 export const fetchTasksTC = (todolistId: string): ThunkType => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     todolistsAPI.getTasks(todolistId)
-        .then(res => dispatch(setTasksAC(todolistId, res.data.items)))
+        .then(res => {
+            dispatch(setTasksAC(todolistId, res.data.items))
+            dispatch(setAppStatusAC('succeeded'))
+        })
 }
 export const deleteTasksTC = (todolistId: string, taskId: string): ThunkType => (dispatch: Dispatch) => {
     todolistsAPI.deleteTask(todolistId, taskId)
         .then(res => dispatch(removeTasksAC(todolistId, taskId)))
 }
 export const addTasksTC = (todolistId: string, title: string): ThunkType => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     todolistsAPI.createTask(todolistId, title)
-        .then(res => dispatch(addTasksAC(res.data.data.item)))
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(addTasksAC(res.data.data.item))
+                dispatch(setAppStatusAC('succeeded'))
+
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+
+
+        })
+        .catch(e => {
+            handleServerNetworkError(e,dispatch)
+
+        })
 }
 //Type for updateTask
 export type UpdateDomainTaskType = {
@@ -230,5 +251,17 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             ...domainModel
         }
         todolistsAPI.updateTask(todolistId, taskId, apiModel)
-            .then(res => dispatch(updateTaskAC(todolistId, taskId, domainModel)))
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTaskAC(todolistId, taskId, domainModel))
+                } else {
+                    handleServerAppError(res.data, dispatch)
+                }
+
+            })
+            .catch(e => {
+                handleServerNetworkError(e,dispatch)
+
+            })
+
     }

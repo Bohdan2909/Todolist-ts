@@ -6,13 +6,18 @@ import Grid from '@mui/material/Grid';
 import {AddItemForm} from '../../components/AddItemForm';
 import Paper from '@mui/material/Paper';
 import TodolistWithRedux from '../../components/TodolistWithRedux';
+import {setAppStatusAC} from '../../state/appReducer';
 
-export const TodolistsList = () => {
+type PropsType = {
+    demo?: boolean
+}
+export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     //BLL:
     const dispatch = appDispatch()
     const todolists = useSelector<AppStateType, TodolistDomainType[]>((state) => state.todolists)
 //Get Todolist from Server
     useEffect(() => {
+        if (demo) return
         dispatch(fetchTodolistsTC())
     }, [])
 //Callback
@@ -87,7 +92,7 @@ export const TodolistsList = () => {
                         return (
                             <Grid key={el.id} item>
                                 <Paper elevation={3} style={{padding: '50px'}}>
-                                    <TodolistWithRedux todolist={el}/>
+                                    <TodolistWithRedux todolist={el} demo={demo}/>
                                 </Paper>
                             </Grid>
                         )

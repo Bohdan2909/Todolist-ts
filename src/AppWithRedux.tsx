@@ -7,11 +7,20 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import {TodolistsList} from './features/TodolistsList/TodolistsList'
-
-function AppWithRedux() {
+import LinearProgress from '@mui/material/LinearProgress';
+import {ErrorSnackbar} from './components/ErrorSnackBar/ErrorSnackBar';
+import {useSelector} from 'react-redux';
+import { RequestStatusType} from './state/appReducer';
+import {AppStateType} from './state/store';
+type PropsType = {
+    demo?: boolean
+}
+function AppWithRedux({demo=false}:PropsType) {
+    const status = useSelector<AppStateType, RequestStatusType>((state) => state.app.status)
     //GUI
     return (
         <div className={'App'}>
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar variant="dense">
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
@@ -21,9 +30,10 @@ function AppWithRedux() {
                         Todolists
                     </Typography>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <TodolistsList/>
+                <TodolistsList demo={demo}/>
             </Container>
         </div>
     );
