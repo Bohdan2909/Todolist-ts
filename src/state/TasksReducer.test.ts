@@ -1,5 +1,5 @@
 import {addTasksAC, removeTasksAC, setTasksAC, tasksReducer, updateTaskAC} from './tasksReducer';
-import {TasksType} from '../App';
+import {TasksType} from '../trash/App';
 import {
     addTodolistAC,
     removeTodolistAC,

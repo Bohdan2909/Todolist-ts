@@ -1,8 +1,8 @@
 import React, {useReducer} from 'react';
 import './App.css';
-import TodoList from './components/Todolist';
+import TodoList from '../components/Todolist';
 import {v1} from 'uuid';
-import {AddItemForm} from './components/AddItemForm';
+import {AddItemForm} from '../components/AddItemForm';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -11,15 +11,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {addTasksAC, removeTasksAC, tasksReducer, updateTaskAC,} from './state/tasksReducer';
+import {addTasksAC, removeTasksAC, tasksReducer, updateTaskAC,} from '../state/tasksReducer';
 import {
     addTodolistAC,
     btnFilterAC, BtnType,
     removeTodolistAC,
     todolistsReducer,
     updateTitleTodolistAC
-} from './state/todolistsReducer';
-import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
+} from '../state/todolistsReducer';
+import {TaskPriorities, TaskStatuses, TaskType} from '../api/todolist-api';
 
 
 // export type TaskType = {
