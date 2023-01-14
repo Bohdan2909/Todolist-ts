@@ -9,9 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {addTodolistsTC, fetchTodolistsTC, TodolistDomainType,} from './reducers/todolistsReducer';
+import {addTodolistsTC, fetchTodolistsTC, TodolistDomainType,} from './state/todolistsReducer';
 import {useSelector} from 'react-redux';
-import {appDispatch, AppStateType} from './store';
+import {appDispatch, AppStateType} from './state/store';
 import TodolistWithRedux from './components/TodolistWithRedux';
 
 
@@ -19,10 +19,11 @@ function AppWithRedux() {
     //BLL:
     const dispatch = appDispatch()
     const todolists = useSelector<AppStateType, TodolistDomainType[]>((state) => state.todolists)
-
+//Get Todolist from Server
     useEffect(() => {
         dispatch(fetchTodolistsTC())
     }, [])
+//Callback
     const addTodolist = useCallback((newTitle: string) => {
         // let newTodolistId = v1()
         // const newTodolist: TodolistType = {id: v1(), title: newTitle, filter: 'all'}
@@ -33,9 +34,6 @@ function AppWithRedux() {
         // })
         let action = addTodolistsTC(newTitle)
         dispatch(action)
-        // dispatchTasks(action)
-
-        // dispatchTasks(AddTasksForTodolistAC(newTodolist.id))
     }, [dispatch])
     // const removeTask = (todolistId: string, taskId: string) => {
     //     // let deleteTask = tasksForTodoList.filter(item => item.id !== taskId)
@@ -62,7 +60,6 @@ function AppWithRedux() {
     //     // setTasks({...tasks, [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, isDone: isDone} : el)})
     //     dispatch(ChangeTaskStatusAC(todolistId, taskId, status))
     // }
-
     // const removeTodolist = (todolistId: string) => {
     //     // setTodolist(todolist.filter(el => el.id !== todolistId))
     //     // setTasks({...tasks})
@@ -83,7 +80,6 @@ function AppWithRedux() {
     //GUI
     return (
         <div className={'App'}>
-
             <AppBar position="static">
                 <Toolbar variant="dense">
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
@@ -98,7 +94,6 @@ function AppWithRedux() {
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
-
                 <Grid container spacing={5}>
                     {
                         todolists.map(el => {
@@ -122,5 +117,4 @@ function AppWithRedux() {
         </div>
     );
 }
-
 export default AppWithRedux;

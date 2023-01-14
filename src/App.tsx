@@ -11,14 +11,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {addTasksAC, removeTasksAC, tasksReducer, updateTaskAC,} from './reducers/tasksReducer';
+import {addTasksAC, removeTasksAC, tasksReducer, updateTaskAC,} from './state/tasksReducer';
 import {
     addTodolistAC,
     btnFilterAC, BtnType,
     removeTodolistAC,
     todolistsReducer,
     updateTitleTodolistAC
-} from './reducers/todolistsReducer';
+} from './state/todolistsReducer';
 import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
 
 

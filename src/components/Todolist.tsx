@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 import CheckBox from './CheckBox';
 import {TaskStatuses, TaskType} from '../api/todolist-api';
-import {BtnType} from '../reducers/todolistsReducer';
+import {BtnType} from '../state/todolistsReducer';
 // import Checkbox from '@mui/material/Checkbox';
 
 
