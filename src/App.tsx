@@ -11,19 +11,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import {addTasksAC, removeTasksAC, tasksReducer, updateTaskAC,} from './reducers/tasksReducer';
 import {
-    AddTasksAC,
-    ChangeTaskStatusAC,
-    RemoveTasksAC,
-    tasksReducer, UpdateTaskAC,
-    UpdateTasksTitleAC
-} from './reducers/tasksReducer';
-import {
-    AddTodolistAC,
-    BtnFilterAC, BtnType,
-    RemoveTodolistAC,
+    addTodolistAC,
+    btnFilterAC, BtnType,
+    removeTodolistAC,
     todolistsReducer,
-    UpdateTitleTodolistAC
+    updateTitleTodolistAC
 } from './reducers/todolistsReducer';
 import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
 
@@ -100,7 +94,7 @@ function App() {
         // let deleteTask = tasksForTodoList.filter(item => item.id !== taskId)
         // setTasksForTodoList(deleteTask)
         // setTasks({...tasks, [todolistId]: tasks[todolistId].filter(el => el.id !== taskId)})
-        dispatchTasks(RemoveTasksAC(todolistId, taskId))
+        dispatchTasks(removeTasksAC(todolistId, taskId))
     }
 
     const addTask = (todolistId: string, value: string) => {
@@ -120,19 +114,19 @@ function App() {
             id:'bla'
         }
 
-        dispatchTasks(AddTasksAC(action))
+        dispatchTasks(addTasksAC(action))
     }
     const updateTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
         // setTasks({
         //     ...tasks,
         //     [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title: newTitle} : task)
         // })
-        dispatchTasks(UpdateTaskAC(todolistId, taskId, {title:newTitle}))
+        dispatchTasks(updateTaskAC(todolistId, taskId, {title:newTitle}))
     }
     const changeTaskStatus = (todolistId: string, taskId: string, status: TaskStatuses) => {
         // setTasksForTodoList(tasksForTodoList.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
         // setTasks({...tasks, [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, isDone: isDone} : el)})
-        dispatchTasks(UpdateTaskAC(todolistId, taskId, {status}))
+        dispatchTasks(updateTaskAC(todolistId, taskId, {status}))
     }
 
     const addTodolist = (newTitle: string) => {
@@ -143,7 +137,7 @@ function App() {
         //     ...tasks,
         //     [newTodolistId]: []
         // })
-        let action = AddTodolistAC(
+        let action = addTodolistAC(
         {id: todolistID1, title: newTitle,  addedDate: '', order: 0}
         )
         dispatchTodolists(action)
@@ -155,17 +149,17 @@ function App() {
         // setTodolist(todolist.filter(el => el.id !== todolistId))
         // setTasks({...tasks})
         // delete tasks[todolistId]
-        dispatchTodolists(RemoveTodolistAC(todolistId))
-        dispatchTasks(RemoveTodolistAC(todolistId))
+        dispatchTodolists(removeTodolistAC(todolistId))
+        dispatchTasks(removeTodolistAC(todolistId))
     }
     const btnFilter = (todolistId: string, btn: BtnType) => {
         // setTodolist(todolist.map(el => el.id === todolistId ? {...el, filter: btn} : el))
-        dispatchTodolists(BtnFilterAC(todolistId, btn))
+        dispatchTodolists(btnFilterAC(todolistId, btn))
     }
 
     const updateTitleTodolist = (todolistId: string, newTitle: string) => {
         // setTodolist(todolist.map(t => t.id === todolistId ? {...t, title: newTitle} : t))
-        dispatchTodolists(UpdateTitleTodolistAC(todolistId, newTitle))
+        dispatchTodolists(updateTitleTodolistAC(todolistId, newTitle))
     }
 
     //GUI

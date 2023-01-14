@@ -14,17 +14,6 @@ import {useSelector} from 'react-redux';
 import {appDispatch, AppStateType} from './store';
 import TodolistWithRedux from './components/TodolistWithRedux';
 
-// export type TaskType = {
-//     id: string
-//     title: string
-//     isDone: boolean
-// }
-// export type BtnType = 'all' | 'active' | 'completed'
-// export type TodolistType = {
-//     id: string
-//     title: string
-//     filter: BtnType
-// }
 
 function AppWithRedux() {
     //BLL:
