@@ -30,7 +30,7 @@ function AppWithRedux({demo=false}:PropsType) {
                         Todolists
                     </Typography>
                 </Toolbar>
-                {status === 'loading' && <LinearProgress/>}
+                {status === 'loading' && <LinearProgress color={'secondary'}/>}
             </AppBar>
             <Container fixed>
                 <TodolistsList demo={demo}/>
