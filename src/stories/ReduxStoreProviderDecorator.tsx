@@ -44,7 +44,11 @@ const initialGlobalState = {
     },
     app:{
         status: 'idle',
-        error: null
+        error: null,
+        isInitialized:false
+    },
+    auth:{
+        isLoggedIn: false
     }
 }
 

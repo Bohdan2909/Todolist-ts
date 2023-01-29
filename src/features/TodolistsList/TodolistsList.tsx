@@ -7,6 +7,7 @@ import {AddItemForm} from '../../components/AddItemForm';
 import Paper from '@mui/material/Paper';
 import TodolistWithRedux from '../../components/TodolistWithRedux';
 import {setAppStatusAC} from '../../state/appReducer';
+import {Navigate} from 'react-router-dom';
 
 type PropsType = {
     demo?: boolean
@@ -15,9 +16,10 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     //BLL:
     const dispatch = appDispatch()
     const todolists = useSelector<AppStateType, TodolistDomainType[]>((state) => state.todolists)
+    const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
 //Get Todolist from Server
     useEffect(() => {
-        if (demo) return
+        if (demo || !isLoggedIn) return
         dispatch(fetchTodolistsTC())
     }, [])
 //Callback
@@ -74,6 +76,10 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     //     dispatch(UpdateTitleTodolistAC(todolistId, newTitle))
     // }
 
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
     return (
         <>
             <Grid container style={{padding: '20px'}}>
